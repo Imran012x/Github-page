@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colorful Analog Clock</title>
+  <style>
+    /* Center everything */
+    body, html {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #282c34;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Clock container */
+    .clock {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 8px solid #fff;
+      border-radius: 50%;
+      background: radial-gradient(circle, #444, #222);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Center dot */
+    .clock::before {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: #fff;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Clock hands */
+    .hand {
+      position: absolute;
+      width: 50%;
+      height: 6px;
+      top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s ease-in;
+      border-radius: 4px;
+    }
+
+    /* Hour hand */
+    .hour {
+      background-color: #ff6347;
+      height: 8px;
+      width: 35%;
+    }
+
+    /* Minute hand */
+    .minute {
+      background-color: #20b2aa;
+      height: 6px;
+      width: 45%;
+    }
+
+    /* Second hand */
+    .second {
+      background-color: #f0e68c;
+      height: 4px;
+      width: 50%;
+    }
+
+    /* Adding tick marks for each hour */
+    .tick {
+      position: absolute;
+      width: 8px;
+      height: 20px;
+      background-color: #fff;
+      top: 0;
+      left: 50%;
+      transform-origin: 50% 150px;
+    }
+
+    /* Adding CSS animation */
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <!-- Hands -->
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="minute"></div>
+    <div class="hand second" id="second"></div>
+
+    <!-- Tick marks for hours -->
+    <div class="tick" style="transform: rotate(0deg);"></div>
+    <div class="tick" style="transform: rotate(30deg);"></div>
+    <div class="tick" style="transform: rotate(60deg);"></div>
+    <div class="tick" style="transform: rotate(90deg);"></div>
+    <div class="tick" style="transform: rotate(120deg);"></div>
+    <div class="tick" style="transform: rotate(150deg);"></div>
+    <div class="tick" style="transform: rotate(180deg);"></div>
+    <div class="tick" style="transform: rotate(210deg);"></div>
+    <div class="tick" style="transform: rotate(240deg);"></div>
+    <div class="tick" style="transform: rotate(270deg);"></div>
+    <div class="tick" style="transform: rotate(300deg);"></div>
+    <div class="tick" style="transform: rotate(330deg);"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      const secondHand = document.getElementById("second");
+      const minuteHand = document.getElementById("minute");
+      const hourHand = document.getElementById("hour");
+
+      const secondDeg = (seconds / 60) * 360;
+      const minuteDeg = (minutes / 60) * 360 + (seconds / 60) * 6;
+      const hourDeg = (hours % 12) / 12 * 360 + (minutes / 60) * 30;
+
+      secondHand.style.transform = `rotate(${secondDeg}deg)`;
+      minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+      hourHand.style.transform = `rotate(${hourDeg}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
